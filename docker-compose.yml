@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mugin3-fcs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mugin3-flight-control
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      # Hardware access
+      - /dev:/dev
+      - /sys:/sys
+      # Configuration
+      - ./flight_control_config.json:/etc/mugin3/flight_control.json
+      # Logging
+      - ./logs:/var/log/mugin3
+    environment:
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "14550:14550/udp"  # MAVLink/QGroundControl
+      - "5005:5005/tcp"    # Command server
+      - "5006:5006/tcp"    # Telemetry server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"

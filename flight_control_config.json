@@ -1,0 +1,103 @@
+{
+  "system": {
+    "name": "MUGIN-3 3600MM H-Tail UAV",
+    "version": "1.0.0",
+    "aircraft_type": "h_tail_uav"
+  },
+  "hardware": {
+    "flight_controller": "Pixhawk 4",
+    "imu": "MPU-9250",
+    "barometer": "BMP280",
+    "compass": "HMC5883L",
+    "gps": "u-blox M8N",
+    "servo_controller": "PWM_GPIO"
+  },
+  "pid": {
+    "roll": {
+      "kp": 4.5,
+      "ki": 0.1,
+      "kd": 0.3
+    },
+    "pitch": {
+      "kp": 4.5,
+      "ki": 0.1,
+      "kd": 0.3
+    },
+    "yaw": {
+      "kp": 4.5,
+      "ki": 0.05,
+      "kd": 0.15
+    },
+    "altitude": {
+      "kp": 0.5,
+      "ki": 0.01,
+      "kd": 0.2
+    }
+  },
+  "control": {
+    "h_tail": true,
+    "max_elevator": 0.25,
+    "max_aileron": 0.25,
+    "max_rudder": 0.25,
+    "servo_channels": {
+      "elevator_left": 0,
+      "elevator_right": 1,
+      "aileron_left": 2,
+      "aileron_right": 3,
+      "rudder": 4,
+      "throttle": 5
+    }
+  },
+  "safety": {
+    "max_roll_angle": 45,
+    "max_pitch_angle": 30,
+    "max_altitude": 1000,
+    "min_altitude": 0,
+    "battery_voltage_warning": 11.0,
+    "battery_voltage_critical": 10.5,
+    "geofence_enabled": true,
+    "geofence_radius": 5000,
+    "failsafe_action": "return_to_home"
+  },
+  "telemetry": {
+    "host": "0.0.0.0",
+    "mavlink_port": 14550,
+    "command_port": 5005,
+    "telemetry_port": 5006,
+    "log_directory": "/var/log/mugin3",
+    "telemetry_rate_hz": 10
+  },
+  "sensors": {
+    "imu": {
+      "i2c_address": "0x68",
+      "i2c_bus": 1,
+      "accel_scale": "2g",
+      "gyro_scale": "250dps"
+    },
+    "barometer": {
+      "i2c_address": "0x76",
+      "i2c_bus": 1,
+      "sea_level_pressure": 101325
+    },
+    "compass": {
+      "i2c_address": "0x1E",
+      "i2c_bus": 1
+    },
+    "gps": {
+      "port": "/dev/ttyUSB0",
+      "baudrate": 38400,
+      "protocol": "NMEA"
+    }
+  },
+  "server": {
+    "command_server_host": "0.0.0.0",
+    "command_server_port": 5005,
+    "telemetry_server_host": "0.0.0.0",
+    "telemetry_server_port": 5006
+  },
+  "logging": {
+    "level": "INFO",
+    "log_file": "/var/log/mugin3/flight_control.log",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}
